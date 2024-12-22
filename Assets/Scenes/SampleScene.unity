@@ -229,7 +229,7 @@ GameObject:
   - component: {fileID: 614411497}
   - component: {fileID: 614411496}
   - component: {fileID: 614411495}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Platforms Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8147,10 +8147,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -7455689875915704942, guid: b626c2d6f24163d458594cd597b29d49, type: 3}
-      propertyPath: m_AngularDrag
-      value: 0.05
-      objectReference: {fileID: 0}
     - target: {fileID: 971601460772573266, guid: b626c2d6f24163d458594cd597b29d49, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.48
@@ -8194,10 +8190,6 @@ PrefabInstance:
     - target: {fileID: 1953413933706832000, guid: b626c2d6f24163d458594cd597b29d49, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 7621899607446746768, guid: b626c2d6f24163d458594cd597b29d49, type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

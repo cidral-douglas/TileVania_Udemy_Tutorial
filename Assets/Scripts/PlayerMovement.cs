@@ -7,15 +7,22 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
     private float speed = 5f;
+    [SerializeField]
+    private float jumpAmount = 10f;
 
     private Rigidbody2D rb;
     private Animator animator;
+    private CapsuleCollider2D playerCollider;
     private Vector2 moveInput;
+
+    private const string IS_RUNNING = "isRunning";
+    private const string GROUND_LAYER = "Ground";
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        playerCollider = GetComponent<CapsuleCollider2D>();
     }
 
     void FixedUpdate()
@@ -27,6 +34,16 @@ public class PlayerMovement : MonoBehaviour
     void OnMove(InputValue value)
     {
         moveInput = value.Get<Vector2>();
+    }
+
+    void OnJump(InputValue value)
+    {
+        if (!playerCollider.IsTouchingLayers(LayerMask.GetMask(GROUND_LAYER))) return;
+
+      if(value.isPressed)
+        {
+            rb.velocity = new Vector2(0f, jumpAmount);
+        }
     }
 
     private void Run()
@@ -55,12 +72,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void ChangePlayerDirection()
     {
-        Debug.Log(Mathf.Sign(rb.velocity.x));
         transform.localScale = new Vector2(Mathf.Sign(rb.velocity.x), 1f);
     }
 
     private void SetIsRunning(bool isRunning)
     {
-        animator.SetBool("isRunning", isRunning);
+        animator.SetBool(IS_RUNNING, isRunning);
     }
 }
