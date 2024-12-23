@@ -62,9 +62,9 @@ public class PlayerMovement : MonoBehaviour
 
         ClimbAnimation();
         rb.velocity = new Vector2(
-            moveInput.y == 0f ? rb.velocity.x : 0f,
-            moveInput.y == 0f ? 0f : moveInput.y * speed
-);
+           moveInput.y == 0f ? rb.velocity.x : 0f,
+           moveInput.y == 0f ? 0f : moveInput.y * speed
+           );
         rb.gravityScale = 0f;
 
     }
@@ -97,8 +97,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Run()
     {
-        if (!IsTouchingTheGround()) return;
-
         RunningAnimation();
         Vector2 velocity = new Vector2(moveInput.x * speed, rb.velocity.y);
         rb.velocity = velocity;
