@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     private Animator animator;
     private CapsuleCollider2D playerCollider;
+    private BoxCollider2D playerFeetCollider;
     private Vector2 moveInput;
     private float startGravity;
 
@@ -27,7 +28,13 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         playerCollider = GetComponent<CapsuleCollider2D>();
+        playerFeetCollider = GetComponent<BoxCollider2D>();
         startGravity = rb.gravityScale;
+    }
+
+    void Update()
+    {
+        RunningAnimation();
     }
 
     void FixedUpdate()
@@ -71,7 +78,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsPossibleToClimb()
     {
-        return playerCollider.IsTouchingLayers(LayerMask.GetMask(CLIMBING_LAYER));
+        return playerFeetCollider.IsTouchingLayers(LayerMask.GetMask(CLIMBING_LAYER));
     }
 
     private void SetClimbingAnimations(bool isIdleClimbing, bool isClimbing)
@@ -97,34 +104,38 @@ public class PlayerMovement : MonoBehaviour
 
     private void Run()
     {
-        RunningAnimation();
         Vector2 velocity = new Vector2(moveInput.x * speed, rb.velocity.y);
         rb.velocity = velocity;
-        ChangePlayerDirection();
     }
 
     private bool IsTouchingTheGround()
     {
-        return playerCollider.IsTouchingLayers(LayerMask.GetMask(GROUND_LAYER));
+        return playerFeetCollider.IsTouchingLayers(LayerMask.GetMask(GROUND_LAYER));
     }
 
     private void RunningAnimation()
     {
-        SetRunningAnimation(HasHorizontalSpeed());
+        if(HasHorizontalSpeed())
+        {
+            ChangePlayerDirection();
+            SetRunningAnimation(true);
+            return;
+        }
+        SetRunningAnimation(false);
+    }
+
+    private bool HasHorizontalSpeed()
+    {
+        return moveInput.x != 0;
+    }
+
+    private void ChangePlayerDirection()
+    {
+        transform.localScale = new Vector2(Mathf.Sign(moveInput.x), 1f);
     }
 
     private void SetRunningAnimation(bool isRunning)
     {
         animator.SetBool(IS_RUNNING, isRunning);
-    }
-
-    private bool HasHorizontalSpeed()
-    {
-        return Mathf.Abs(rb.velocity.x) > Mathf.Epsilon;
-    }
-
-    private void ChangePlayerDirection()
-    {
-        transform.localScale = new Vector2(Mathf.Sign(rb.velocity.x), 1f);
     }
 }

@@ -15,7 +15,7 @@ TagManager:
   - Climbing
   - Player
   - Bg
-  - 
+  - Bounce
   - 
   - 
   - 
@@ -50,7 +50,7 @@ TagManager:
   - name: Platform
     uniqueID: 2456496099
     locked: 0
-  - name: Climbing
+  - name: Objects
     uniqueID: 1645823323
     locked: 0
   - name: Player
